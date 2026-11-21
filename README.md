@@ -389,14 +389,17 @@ Contributions are welcome!
 
 ## 👤 Author
 
-**Ravindu Chamika**  
-*52 Weeks of Security Series*
+**Ravindu Chamika**
 
-If this tool helped you discover unmanaged AI workloads or secure your environment, please ⭐ the repository!
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ravindu-chamika)
+[![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?logo=github&logoColor=white)](https://github.com/RavinduChamika1)
+
+If this helped you learn something, please ⭐ the repo and follow the series.
 
 ---
 
 ## 📄 License
 
-Copyright © 2026 Ravindu Chamika. Released under the [MIT License](LICENSE).
-Built for cybersecurity students and practitioners · **52 Weeks of Security** · **Week 8**
+Copyright © 2026 **Ravindu Chamika**. Released under the [MIT License](LICENSE).
+
+<p align="center"><sub>Built for cybersecurity students · 52 Weeks of Security · Week 8</sub></p>
