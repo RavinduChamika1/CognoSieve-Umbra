@@ -1,0 +1,25 @@
+name: ollama
+category: inference
+default_ports: [11434, 11435]
+requests:
+  - method: GET
+    path: /
+    match_any:
+      - body_contains: "Ollama is running"
+  - method: GET
+    path: /api/tags
+    match_all:
+      - status: 200
+      - json_path_exists: "models"
+    extract:
+      models_or_tools: "models[].name"
+  - method: GET
+    path: /api/version
+    extract:
+      version: "version"
+auth_check_path: /api/tags
+capability_flags: ["lists_models", "local_weights"]
+specificity: 100
+status: active
+verify_note: "https://github.com/ollama/ollama/blob/main/docs/api.md"
+

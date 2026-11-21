@@ -1,0 +1,19 @@
+name: anythingllm
+category: chat-ui
+default_ports: [3001]
+requests:
+  - method: GET
+    path: /
+    match_any:
+      - html_title_contains: "AnythingLLM"
+      - body_contains: "AnythingLLM"
+  - method: GET
+    path: /api/system/version
+    extract:
+      version: "version"
+auth_check_path: /api/v1/auth
+capability_flags: ["workspace_docs", "vector_embeddings"]
+specificity: 90
+status: active
+verify_note: "https://docs.anythingllm.com/api/endpoints"
+

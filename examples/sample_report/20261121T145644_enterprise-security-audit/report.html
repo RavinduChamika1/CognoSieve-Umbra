@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CognoSieve Umbra Report - enterprise-security-audit</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --critical: #ef4444;
+      --high: #f97316;
+      --medium: #f59e0b;
+      --low: #10b981;
+      --info: #64748b;
+      --approved: #10b981;
+      --unapproved: #ef4444;
+      --table-stripe: rgba(255, 255, 255, 0.02);
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f8fafc;
+        --card-bg: #ffffff;
+        --card-border: #e2e8f0;
+        --text: #0f172a;
+        --text-muted: #64748b;
+        --accent: #0284c7;
+        --table-stripe: rgba(0, 0, 0, 0.02);
+      }
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      margin: 0;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    header {
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    h1, h2, h3 {
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    h1 { font-size: 2rem; color: var(--accent); margin-bottom: 0.5rem; }
+    h2 { font-size: 1.4rem; margin-top: 2rem; border-bottom: 1px solid var(--card-border); padding-bottom: 0.5rem; }
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .badge-critical { background-color: var(--critical); color: #fff; }
+    .badge-high { background-color: var(--high); color: #fff; }
+    .badge-medium { background-color: var(--medium); color: #000; }
+    .badge-low { background-color: var(--low); color: #fff; }
+    .badge-info { background-color: var(--info); color: #fff; }
+    .badge-approved { background-color: var(--approved); color: #fff; }
+    .badge-unapproved { background-color: var(--unapproved); color: #fff; }
+    .badge-unknown { background-color: var(--info); color: #fff; }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+    }
+    .stat-val {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+    .stat-val.unapproved { color: var(--unapproved); }
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .exec-summary {
+      background: var(--card-bg);
+      border-left: 4px solid var(--accent);
+      padding: 1.25rem;
+      border-radius: 0 0.5rem 0.5rem 0;
+      margin: 1.5rem 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      background: var(--card-bg);
+      border-radius: 0.5rem;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+    }
+    th, td {
+      padding: 0.85rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--card-border);
+    }
+    th {
+      background: rgba(0, 0, 0, 0.2);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    tr:nth-child(even) { background-color: var(--table-stripe); }
+    
+    .finding-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+    .finding-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    .finding-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+    .remediation-box {
+      background: rgba(0,0,0,0.15);
+      border-radius: 0.35rem;
+      padding: 0.75rem 1rem;
+      margin-top: 0.75rem;
+    }
+    .remediation-box ol { margin: 0; padding-left: 1.2rem; }
+    footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--card-border);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.85em;
+      background: rgba(125, 125, 125, 0.15);
+      padding: 0.15em 0.35em;
+      border-radius: 0.25rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>CognoSieve Umbra Discovery Report</h1>
+      <p style="color: var(--text-muted); margin: 0;">
+        Scope: <strong>enterprise-security-audit</strong> | Run ID: <code>run_20261121_145645</code> |
+        Generated: 2026-11-21T14:56:44.694413+00:00 | Version: v0.1.0
+      </p>
+    </header>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-val unapproved">2</div>
+        <div class="stat-label">Unapproved Shadow AI</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">2</div>
+        <div class="stat-label">Total Endpoints Found</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" style="color: var(--approved)">0</div>
+        <div class="stat-label">Approved Inventory</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" style="color: var(--critical)">0</div>
+        <div class="stat-label">Critical Exposures</div>
+      </div>
+    </div>
+
+    <h2>Executive Summary</h2>
+    <div class="exec-summary">
+      <p style="margin: 0; font-size: 1.05rem;">Discovery identified 2 total AI service endpoint(s), including 2 unapproved shadow AI deployment(s). The highest-severity risk identified is a MEDIUM exposure on ollama (127.0.0.1:11435), driven by: No authentication required (+3.0), Exposes active models or tools: 2 listed (+1.5). Priority action: Set OLLAMA_HOST=127.0.0.1:11434 in environment or service configuration..</p>
+    </div>
+
+    
+
+    <h2>Top 5 Priority Actions (Fix First)</h2>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Service</th>
+          <th>Target</th>
+          <th>Severity</th>
+          <th>Score</th>
+          <th>Priority Remediation</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+          <td>1</td>
+          <td><strong>ollama</strong></td>
+          <td><code>127.0.0.1:11435</code></td>
+          <td><span class="badge badge-medium">medium</span></td>
+          <td><strong>5.5</strong></td>
+          <td>Set OLLAMA_HOST=127.0.0.1:11434 in environment or service configuration.</td>
+        </tr>
+        
+        <tr>
+          <td>2</td>
+          <td><strong>open-webui</strong></td>
+          <td><code>127.0.0.1:3000</code></td>
+          <td><span class="badge badge-low">low</span></td>
+          <td><strong>1.0</strong></td>
+          <td>Enable WEBUI_AUTH=True in Open WebUI environment variables.</td>
+        </tr>
+        
+      </tbody>
+    </table>
+    
+
+    <h2>Discovered AI Inventory</h2>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Service</th>
+          <th>Target</th>
+          <th>Category</th>
+          <th>Bind Scope</th>
+          <th>Auth</th>
+          <th>TLS</th>
+          <th>Status</th>
+          <th>Severity</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+          <td><strong>ollama</strong></td>
+          <td><code>127.0.0.1:11435</code></td>
+          <td>inference</td>
+          <td>loopback</td>
+          <td>none</td>
+          <td>Plain</td>
+          <td><span class="badge badge-unapproved">unapproved</span></td>
+          <td><span class="badge badge-medium">medium</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>open-webui</strong></td>
+          <td><code>127.0.0.1:3000</code></td>
+          <td>chat-ui</td>
+          <td>loopback</td>
+          <td>required</td>
+          <td>Plain</td>
+          <td><span class="badge badge-unapproved">unapproved</span></td>
+          <td><span class="badge badge-low">low</span></td>
+        </tr>
+        
+      </tbody>
+    </table>
+    
+
+    <h2>Finding Cards & Remediation Guidance</h2>
+    
+    <div class="finding-card">
+      <div class="finding-header">
+        <div class="finding-title">
+          ollama &mdash; <code>127.0.0.1:11435</code>
+        </div>
+        <div>
+          <span class="badge badge-unapproved">unapproved</span>
+          <span class="badge badge-medium">medium (5.5)</span>
+        </div>
+      </div>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0.25rem 0;">
+        Category: <strong>inference</strong> | Source: <strong>network</strong> |
+        Scope: <strong>loopback</strong> | Auth: <strong>none</strong> |
+        Owner: <strong>Unassigned</strong>
+      </p>
+
+      
+      <p style="margin: 0.5rem 0; font-size: 0.9rem;">
+        <strong>Discovered Models / Tools:</strong>
+        
+        <code>llama3:latest</code>, 
+        
+        <code>mistral:7b</code>
+        
+      </p>
+      
+
+      
+      <p style="margin: 0.5rem 0; font-size: 0.9rem;">
+        <strong>Risk Factors:</strong> No authentication required (+3.0); Exposes active models or tools: 2 listed (+1.5); Unapproved shadow AI deployment (+1.0)
+      </p>
+      
+
+      
+      <p style="margin: 0.5rem 0; font-size: 0.85rem; color: var(--text-muted);">
+        <strong>Framework Tags:</strong> OWASP LLM01:2025 Model Denial of Service, OWASP LLM02:2025 Sensitive Information Disclosure, NIST AI RMF MAP 1.1 (AI System Context & Asset Inventory), NIST AI RMF MEASURE 2.6 (Security & Resiliency), NIST AI RMF MEASURE 2.6
+      </p>
+      
+
+      
+      <div class="remediation-box">
+        <strong>Remediation Steps:</strong>
+        <ol>
+          
+          <li>Set OLLAMA_HOST=127.0.0.1:11434 in environment or service configuration.</li>
+          
+          <li>Upgrade to Ollama >= 0.1.34 to patch CVE-2024-37032.</li>
+          
+          <li>Do not expose Ollama port 11434 to untrusted networks without an authenticating reverse proxy.</li>
+          
+          <li>Enable API key or bearer token authentication in the service configuration.</li>
+          
+          <li>Place an authenticating reverse proxy (e.g., Caddy, Envoy, LiteLLM with master key) in front of the listener.</li>
+          
+          <li>Audit and restrict model listing endpoints (/v1/models, /api/tags) to authenticated callers.</li>
+          
+          <li>Remove unapproved or proprietary fine-tuned model weights from public storage directories.</li>
+          
+          <li>Review this discovery with the security/compliance team. Add to approved.yaml if legitimate, or decommission.</li>
+          
+        </ol>
+      </div>
+      
+    </div>
+    
+    <div class="finding-card">
+      <div class="finding-header">
+        <div class="finding-title">
+          open-webui &mdash; <code>127.0.0.1:3000</code>
+        </div>
+        <div>
+          <span class="badge badge-unapproved">unapproved</span>
+          <span class="badge badge-low">low (1.0)</span>
+        </div>
+      </div>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0.25rem 0;">
+        Category: <strong>chat-ui</strong> | Source: <strong>network</strong> |
+        Scope: <strong>loopback</strong> | Auth: <strong>required</strong> |
+        Owner: <strong>Unassigned</strong>
+      </p>
+
+      
+
+      
+      <p style="margin: 0.5rem 0; font-size: 0.9rem;">
+        <strong>Risk Factors:</strong> Unapproved shadow AI deployment (+1.0)
+      </p>
+      
+
+      
+      <p style="margin: 0.5rem 0; font-size: 0.85rem; color: var(--text-muted);">
+        <strong>Framework Tags:</strong> OWASP LLM02:2025 Sensitive Information Disclosure, OWASP LLM07:2025 System Prompt Leakage, NIST AI RMF GOVERN 1.2 (Accountability & Policy)
+      </p>
+      
+
+      
+      <div class="remediation-box">
+        <strong>Remediation Steps:</strong>
+        <ol>
+          
+          <li>Enable WEBUI_AUTH=True in Open WebUI environment variables.</li>
+          
+          <li>Disable untrusted custom tools and restrict admin account creation.</li>
+          
+          <li>Upgrade Open WebUI to >= 0.3.10.</li>
+          
+          <li>Review this discovery with the security/compliance team. Add to approved.yaml if legitimate, or decommission.</li>
+          
+        </ol>
+      </div>
+      
+    </div>
+    
+
+    
+    <h2>What Changed (Drift Analysis)</h2>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-val" style="color: var(--low)">2</div><div class="stat-label">New Findings</div></div>
+      <div class="stat-card"><div class="stat-val" style="color: var(--medium)">0</div><div class="stat-label">Changed Findings</div></div>
+      <div class="stat-card"><div class="stat-val">0</div><div class="stat-label">Unchanged</div></div>
+      <div class="stat-card"><div class="stat-val" style="color: var(--text-muted)">2</div><div class="stat-label">Gone</div></div>
+    </div>
+    
+
+    <h2>Coverage and Limits</h2>
+    <div class="exec-summary" style="border-left-color: var(--text-muted);">
+      <p style="margin: 0 0 0.5rem 0; font-weight: 600;">Defensive Scan Limitations:</p>
+      <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.9rem; color: var(--text-muted);">
+        <li>Ports outside the configured scan range were not probed.</li>
+        <li>Services without signatures in the YAML probe pack cannot be fingerprinted.</li>
+        <li>Excluded hosts and networks were strictly avoided according to safety policy.</li>
+        <li>If Docker is not running or not installed, container discovery was skipped gracefully.</li>
+        <li>Non-HTTP proprietary protocols are not detected.</li>
+        <li>A clean report confirms absence of matching signatures, not the absolute absence of shadow AI.</li>
+      </ul>
+    </div>
+
+    <footer>
+      CognoSieve Umbra v0.1.0 &bull; Defensive Shadow AI Discovery
+    </footer>
+  </div>
+</body>
+</html>

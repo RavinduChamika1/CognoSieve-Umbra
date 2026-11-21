@@ -1,0 +1,15 @@
+name: flowise
+category: agent-platform
+default_ports: [3000]
+requests:
+  - method: GET
+    path: /api/v1/ping
+    match_any:
+      - body_contains: "pong"
+      - html_title_contains: "Flowise"
+auth_check_path: /api/v1/chatflows
+capability_flags: ["agent_execution", "tool_execution", "flow_builder"]
+specificity: 85
+status: active
+verify_note: "https://docs.flowiseai.com/api-reference"
+

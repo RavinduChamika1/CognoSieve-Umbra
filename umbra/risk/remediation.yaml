@@ -1,0 +1,58 @@
+factors:
+  auth_none:
+    - "Enable API key or bearer token authentication in the service configuration."
+    - "Place an authenticating reverse proxy (e.g., Caddy, Envoy, LiteLLM with master key) in front of the listener."
+  bind_public:
+    - "Immediately restrict listener bind address from 0.0.0.0 or public interface to 127.0.0.1 or internal private subnet."
+    - "Enforce ingress firewall rules / security groups blocking external access to this port."
+  bind_lan:
+    - "Restrict network interface binding to 127.0.0.1 unless explicit multi-host network access is required."
+    - "Implement network segmentation and 802.1X / Zero Trust ingress controls."
+  no_tls_non_loopback:
+    - "Terminate TLS at an ingress proxy or enable HTTPS in the service native config with a trusted internal certificate."
+  exposes_models_or_data:
+    - "Audit and restrict model listing endpoints (/v1/models, /api/tags) to authenticated callers."
+    - "Remove unapproved or proprietary fine-tuned model weights from public storage directories."
+  agent_or_tool_execution_capability:
+    - "Disable arbitrary code execution / python code sandbox plugins in the agent platform."
+    - "Enforce human-in-the-loop approval on all automated external HTTP and shell execution tools."
+  unapproved_by_inventory:
+    - "Review this discovery with the security/compliance team. Add to approved.yaml if legitimate, or decommission."
+  known_issue_version:
+    - "Immediately upgrade this software package to the latest patched release addressing reported CVEs."
+  credential_indicator_present:
+    - "Rotate exposed credentials, API keys, or bearer tokens immediately and store them securely in a secrets manager."
+
+services:
+  ollama:
+    - "Set OLLAMA_HOST=127.0.0.1:11434 in environment or service configuration."
+    - "Upgrade to Ollama >= 0.1.34 to patch CVE-2024-37032."
+    - "Do not expose Ollama port 11434 to untrusted networks without an authenticating reverse proxy."
+  open-webui:
+    - "Enable WEBUI_AUTH=True in Open WebUI environment variables."
+    - "Disable untrusted custom tools and restrict admin account creation."
+    - "Upgrade Open WebUI to >= 0.3.10."
+  vllm:
+    - "Configure --api-key <secret> on startup to mandate Bearer token authentication."
+    - "Run vLLM behind an API gateway with rate limiting and token accounting."
+  anythingllm:
+    - "Set AUTH_TOKEN in AnythingLLM server environment to require password or multi-user login."
+    - "Restrict storage permissions for document workspaces."
+  litellm:
+    - "Set LITELLM_MASTER_KEY in environment to lock down admin and proxy routing endpoints."
+  chromadb:
+    - "Enable CHROMA_SERVER_AUTH_PROVIDER (token or basic auth) in Chroma environment."
+    - "Upgrade ChromaDB to >= 0.4.24."
+  qdrant:
+    - "Set service.api_key in config.yaml to require API keys for collection reads and writes."
+  weaviate:
+    - "Enable AUTHENTICATION_APIKEY_ENABLED=true and define read-only and admin keys."
+  flowise:
+    - "Set FLOWISE_USERNAME and FLOWISE_PASSWORD in .env."
+    - "Do not expose Flowise to the public internet."
+  langflow:
+    - "Enable LANGFLOW_AUTO_LOGIN=False and set strong superuser credentials."
+    - "Upgrade Langflow to >= 1.0.0."
+  n8n:
+    - "Enable user management (N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true) and disable public execution."
+

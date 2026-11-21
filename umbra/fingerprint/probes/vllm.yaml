@@ -1,0 +1,24 @@
+name: vllm
+category: inference
+default_ports: [8000]
+requests:
+  - method: GET
+    path: /version
+    match_all:
+      - status: 200
+      - json_path_exists: "version"
+    extract:
+      version: "version"
+  - method: GET
+    path: /v1/models
+    match_all:
+      - status: 200
+      - json_path_exists: "data"
+    extract:
+      models_or_tools: "data[].id"
+auth_check_path: /v1/models
+capability_flags: ["lists_models", "gpu_inference"]
+specificity: 90
+status: active
+verify_note: "https://docs.vllm.ai/en/latest/serving/openai_compatible_server.html"
+

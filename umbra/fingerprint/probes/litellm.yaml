@@ -1,0 +1,17 @@
+name: litellm
+category: gateway
+default_ports: [4000]
+requests:
+  - method: GET
+    path: /health/liveliness
+    match_any:
+      - body_contains: "LiteLLM"
+      - json_path_exists: "litellm_version"
+    extract:
+      version: "litellm_version"
+auth_check_path: /models
+capability_flags: ["model_routing", "proxy_gateway"]
+specificity: 90
+status: active
+verify_note: "https://docs.litellm.ai/docs/proxy/health"
+

@@ -1,0 +1,19 @@
+name: langflow
+category: agent-platform
+default_ports: [7860]
+requests:
+  - method: GET
+    path: /health
+    match_any:
+      - json_path_equals:
+          status: "ok"
+      - html_title_contains: "Langflow"
+      - body_contains: "Langflow"
+    extract:
+      version: "version"
+auth_check_path: /api/v1/flows
+capability_flags: ["agent_execution", "tool_execution", "visual_ai_pipeline"]
+specificity: 85
+status: active
+verify_note: "https://docs.langflow.org/api-reference"
+

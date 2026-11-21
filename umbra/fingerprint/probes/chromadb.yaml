@@ -1,0 +1,19 @@
+name: chromadb
+category: vector-db
+default_ports: [8000]
+requests:
+  - method: GET
+    path: /api/v1/heartbeat
+    match_any:
+      - json_path_exists: "nanosecond heartbeat"
+      - json_path_exists: "heartbeat"
+  - method: GET
+    path: /api/v1/version
+    extract:
+      version: "version"
+auth_check_path: /api/v1/collections
+capability_flags: ["vector_storage", "document_chunks"]
+specificity: 85
+status: active
+verify_note: "https://docs.trychroma.com/reference/api"
+

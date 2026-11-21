@@ -1,0 +1,35 @@
+ollama:
+  - max_version: "0.1.34"
+    cve: "CVE-2024-37032"
+    description: "Probllama arbitrary file write and potential remote code execution via malformed manifest"
+
+open-webui:
+  - max_version: "0.3.5"
+    cve: "CVE-2024-36130"
+    description: "Arbitrary code execution via untrusted custom tools and python sandbox escape"
+
+anythingllm:
+  - max_version: "1.4.0"
+    cve: "CVE-2024-29895"
+    description: "Unauthenticated document and workspace data extraction"
+
+vllm:
+  - max_version: "0.4.0"
+    cve: "CVE-2024-42478"
+    description: "Chat template injection and unauthorized model weight access"
+
+chromadb:
+  - max_version: "0.4.22"
+    cve: "CVE-2024-34359"
+    description: "Server-side request forgery (SSRF) and untrusted deserialization"
+
+langflow:
+  - max_version: "1.0.0"
+    cve: "CVE-2024-31445"
+    description: "Arbitrary Python code execution via unvalidated custom component execution"
+
+flowise:
+  - max_version: "1.4.0"
+    cve: "CVE-2024-31210"
+    description: "Unauthenticated credential extraction and arbitrary workflow execution"
+

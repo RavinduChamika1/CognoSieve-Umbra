@@ -1,0 +1,15 @@
+name: milvus-attu
+category: vector-db
+default_ports: [3000, 8000, 19530]
+requests:
+  - method: GET
+    path: /
+    match_any:
+      - html_title_contains: "Attu"
+      - body_contains: "Milvus Management Tool"
+auth_check_path: /api/v1/user
+capability_flags: ["vector_admin", "milvus_management"]
+specificity: 85
+status: active
+verify_note: "https://github.com/zilliztech/attu"
+

@@ -1,0 +1,7 @@
+{
+  "status": true,
+  "name": "Open WebUI",
+  "version": "0.3.10",
+  "default_models": "llama3:latest"
+}
+

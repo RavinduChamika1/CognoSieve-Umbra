@@ -1,0 +1,17 @@
+{
+  "models": [
+    {
+      "name": "llama3:latest",
+      "model": "llama3:latest",
+      "modified_at": "2024-05-01T12:00:00Z",
+      "size": 4661224676
+    },
+    {
+      "name": "mistral:latest",
+      "model": "mistral:latest",
+      "modified_at": "2024-05-02T12:00:00Z",
+      "size": 4109865159
+    }
+  ]
+}
+

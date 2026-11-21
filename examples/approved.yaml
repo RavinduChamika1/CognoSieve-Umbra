@@ -1,0 +1,20 @@
+# CognoSieve Umbra: Approved Inventory Allowlist Example
+# Endpoints listed here are marked 'approved' with their designated owner.
+# Any unlisted endpoint is flagged as 'unapproved' (Shadow AI) in reports.
+
+services:
+  - service: ollama
+    host_or_cidr: 127.0.0.1
+    port: 11434
+    owner: "Engineering Core Team"
+    approved: true
+    purpose: "Approved local developer offline LLM for code assistance"
+    ticket_or_doc: "SEC-REQ-2026-081"
+
+  - service: vllm
+    host_or_cidr: 10.0.0.0/24
+    port: 8000
+    owner: "AI Platform Services"
+    approved: true
+    purpose: "Corporate high-throughput internal LLM serving cluster"
+    ticket_or_doc: "AI-ARCH-1104"

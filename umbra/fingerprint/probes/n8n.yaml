@@ -1,0 +1,16 @@
+name: n8n
+category: agent-platform
+default_ports: [5678]
+requests:
+  - method: GET
+    path: /healthz
+    match_any:
+      - json_path_equals:
+          status: "ok"
+      - html_title_contains: "n8n"
+auth_check_path: /api/v1/workflows
+capability_flags: ["agent_execution", "webhook_trigger", "workflow_automation"]
+specificity: 80
+status: active
+verify_note: "https://docs.n8n.io/hosting/monitoring/"
+

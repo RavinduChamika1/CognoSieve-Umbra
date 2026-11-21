@@ -1,0 +1,20 @@
+# CognoSieve Umbra: Approved AI Service Inventory
+# Any detected AI service not matching an entry here is classified as Shadow AI (unapproved).
+
+services:
+  - service: ollama
+    host_or_cidr: 127.0.0.1
+    port: 11434
+    owner: "DevOps / Local Engineering"
+    approved: true
+    purpose: "Approved local offline code completion model"
+    ticket_or_doc: "IT-SEC-1092"
+
+  - service: vllm
+    host_or_cidr: 10.0.0.0/16
+    port: 8000
+    owner: "AI Platform Team"
+    approved: true
+    purpose: "Centralized internal LLM inference endpoint"
+    ticket_or_doc: "ARCH-882"
+

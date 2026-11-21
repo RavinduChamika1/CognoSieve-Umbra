@@ -1,0 +1,45 @@
+categories:
+  inference:
+    - "OWASP LLM01:2025 Model Denial of Service"
+    - "OWASP LLM02:2025 Sensitive Information Disclosure"
+    - "NIST AI RMF MAP 1.1 (AI System Context & Asset Inventory)"
+    - "NIST AI RMF MEASURE 2.6 (Security & Resiliency)"
+  chat-ui:
+    - "OWASP LLM02:2025 Sensitive Information Disclosure"
+    - "OWASP LLM07:2025 System Prompt Leakage"
+    - "NIST AI RMF GOVERN 1.2 (Accountability & Policy)"
+  gateway:
+    - "OWASP LLM10:2025 Unchecked Resource Consumption"
+    - "NIST AI RMF MANAGE 2.4 (Third-Party Risk Management)"
+  vector-db:
+    - "OWASP LLM02:2025 Sensitive Information Disclosure"
+    - "OWASP LLM04:2025 Data and Model Poisoning"
+    - "NIST AI RMF MEASURE 2.7 (Data Privacy & Integrity)"
+  agent-platform:
+    - "OWASP LLM06:2025 Excessive Agency"
+    - "OWASP LLM08:2025 Vector and Embedding Weaknesses"
+    - "NIST AI RMF MANAGE 1.3 (Autonomous Risk Mitigation)"
+  mcp:
+    - "OWASP LLM06:2025 Excessive Agency"
+    - "OWASP LLM02:2025 Sensitive Information Disclosure"
+    - "NIST AI RMF MAP 1.5 (Component & Dependency Tracking)"
+  local-model-store:
+    - "OWASP LLM03:2025 Supply Chain Vulnerabilities"
+    - "NIST AI RMF GOVERN 1.3 (Model Governance)"
+
+factors:
+  auth_none:
+    - "OWASP LLM02:2025 Sensitive Information Disclosure"
+    - "NIST AI RMF MEASURE 2.6"
+  bind_public:
+    - "OWASP LLM01:2025 Model Denial of Service"
+    - "NIST AI RMF GOVERN 1.1"
+  agent_or_tool_execution_capability:
+    - "OWASP LLM06:2025 Excessive Agency"
+    - "NIST AI RMF MANAGE 1.3"
+  known_issue_version:
+    - "OWASP LLM03:2025 Supply Chain Vulnerabilities"
+    - "NIST AI RMF MEASURE 2.1"
+  credential_indicator_present:
+    - "OWASP LLM02:2025 Sensitive Information Disclosure"
+

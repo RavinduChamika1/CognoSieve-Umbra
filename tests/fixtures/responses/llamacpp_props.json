@@ -1,0 +1,9 @@
+{
+  "default_generation_settings": {
+    "n_ctx": 4096,
+    "model": "llama-2-7b.Q4_K_M.gguf"
+  },
+  "total_slots": 1,
+  "version": "b2734"
+}
+

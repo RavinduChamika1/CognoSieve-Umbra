@@ -1,0 +1,21 @@
+factors:
+  auth_none: 3.0
+  bind_public: 3.0
+  bind_lan: 1.5
+  bind_loopback: 0.0
+  no_tls_non_loopback: 0.5
+  exposes_models_or_data: 1.5
+  agent_or_tool_execution_capability: 2.0
+  unapproved_by_inventory: 1.0
+  known_issue_version: 2.0
+  credential_indicator_present: 1.5
+
+cap: 10.0
+
+severity_bands:
+  critical: ">= 8"
+  high: ">= 6"
+  medium: ">= 3"
+  low: "> 0"
+  info: "0"
+

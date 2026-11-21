@@ -1,0 +1,18 @@
+name: open-webui
+category: chat-ui
+default_ports: [3000, 8080]
+requests:
+  - method: GET
+    path: /api/config
+    match_any:
+      - json_path_equals:
+          name: "Open WebUI"
+      - body_contains: "Open WebUI"
+    extract:
+      version: "version"
+auth_check_path: /api/v1/auths
+capability_flags: ["chat_interface", "model_management"]
+specificity: 95
+status: active
+verify_note: "https://docs.openwebui.com/getting-started/"
+

@@ -1,0 +1,19 @@
+name: generic-openai-compatible
+category: inference
+default_ports: [8000, 8080, 5000]
+requests:
+  - method: GET
+    path: /v1/models
+    match_all:
+      - status: 200
+      - json_path_equals:
+          object: "list"
+      - json_path_exists: "data"
+    extract:
+      models_or_tools: "data[].id"
+auth_check_path: /v1/models
+capability_flags: ["openai_spec", "inference"]
+specificity: 10
+status: active
+verify_note: "https://platform.openai.com/docs/api-reference/models/list"
+

@@ -1,0 +1,18 @@
+name: qdrant
+category: vector-db
+default_ports: [6333]
+requests:
+  - method: GET
+    path: /
+    match_all:
+      - status: 200
+      - json_path_equals:
+          title: "qdrant - vector search engine"
+    extract:
+      version: "version"
+auth_check_path: /collections
+capability_flags: ["vector_indexing", "semantic_search"]
+specificity: 90
+status: active
+verify_note: "https://qdrant.tech/documentation/concepts/explore/"
+

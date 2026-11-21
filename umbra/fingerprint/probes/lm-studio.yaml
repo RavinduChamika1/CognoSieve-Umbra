@@ -1,0 +1,17 @@
+name: lm-studio
+category: inference
+default_ports: [1234]
+requests:
+  - method: GET
+    path: /v1/models
+    match_all:
+      - status: 200
+      - body_contains: "lmstudio"
+    extract:
+      models_or_tools: "data[].id"
+auth_check_path: /v1/models
+capability_flags: ["desktop_llm", "local_weights"]
+specificity: 90
+status: active
+verify_note: "https://lmstudio.ai/docs/local-server"
+

@@ -1,0 +1,213 @@
+{
+  "run": {
+    "id": "run_20261121_075136",
+    "command": "umbra scan --target 127.0.0.1",
+    "target_summary": "1 hosts",
+    "started_at": "2026-11-21T07:51:36.544502+00:00",
+    "completed_at": "2026-11-21T07:51:36.782961+00:00",
+    "duration_seconds": 0.238459,
+    "exit_code": 0,
+    "scope_label": "enterprise-security-audit",
+    "findings_count": 2,
+    "unapproved_count": 2,
+    "stats": {}
+  },
+  "scope": {
+    "label": "enterprise-security-audit",
+    "authorized_by": "[REDACTED_CREDENTIAL]",
+    "targets": [
+      "127.0.0.1",
+      "10.0.0.0/24",
+      "192.168.1.0/24"
+    ],
+    "excluded": [
+      "10.0.0.1",
+      "192.168.1.1"
+    ],
+    "notes": "Authorized defensive discovery scan for unauthorized or unapproved shadow AI instances across engineering subnets."
+  },
+  "executive_summary": "Discovery identified 2 total AI service endpoint(s), including 2 unapproved shadow AI deployment(s). The highest-severity risk identified is a MEDIUM exposure on ollama (127.0.0.1:11435), driven by: No authentication required (+3.0), Exposes active models or tools: 2 listed (+1.5). Priority action: Set OLLAMA_HOST=127.0.0.1:11434 in environment or service configuration..",
+  "findings": [
+    {
+      "id": "56638b72daa08eec",
+      "run_id": "run_20261121_075136",
+      "host": "127.0.0.1",
+      "port": 11435,
+      "service": "ollama",
+      "version": "0.1.34",
+      "category": "inference",
+      "source": "network",
+      "bind_scope": "loopback",
+      "auth_state": "[REDACTED_CREDENTIAL]",
+      "tls": false,
+      "approval": "unapproved",
+      "owner": null,
+      "models_or_tools": [
+        "llama3:latest",
+        "mistral:7b"
+      ],
+      "credential_indicator": false,
+      "risk_score": 5.5,
+      "severity": "medium",
+      "risk_factors": [
+        "No authentication required (+3.0)",
+        "Exposes active models or tools: 2 listed (+1.5)",
+        "Unapproved shadow AI deployment (+1.0)"
+      ],
+      "remediation": [
+        "Set OLLAMA_HOST=127.0.0.1:11434 in environment or service configuration.",
+        "Upgrade to Ollama >= 0.1.34 to patch CVE-2024-37032.",
+        "Do not expose Ollama port 11434 to untrusted networks without an authenticating reverse proxy.",
+        "Enable API key or bearer token authentication in the service configuration.",
+        "Place an authenticating reverse proxy (e.g., Caddy, Envoy, LiteLLM with master key) in front of the listener.",
+        "Audit and restrict model listing endpoints (/v1/models, /api/tags) to authenticated callers.",
+        "Remove unapproved or proprietary fine-tuned model weights from public storage directories.",
+        "Review this discovery with the security/compliance team. Add to approved.yaml if legitimate, or decommission."
+      ],
+      "framework_tags": [
+        "OWASP LLM01:2025 Model Denial of Service",
+        "OWASP LLM02:2025 Sensitive Information Disclosure",
+        "NIST AI RMF MAP 1.1 (AI System Context & Asset Inventory)",
+        "NIST AI RMF MEASURE 2.6 (Security & Resiliency)",
+        "NIST AI RMF MEASURE 2.6"
+      ],
+      "status": "changed",
+      "first_seen": "2026-11-21T07:51:36.736069+00:00",
+      "last_seen": "2026-11-21T07:51:36.736081+00:00",
+      "evidence_file": "raw/56638b72daa08eec.txt"
+    },
+    {
+      "id": "735e9e8047194d79",
+      "run_id": "run_20261121_075136",
+      "host": "127.0.0.1",
+      "port": 3000,
+      "service": "open-webui",
+      "version": "0.3.10",
+      "category": "chat-ui",
+      "source": "network",
+      "bind_scope": "loopback",
+      "auth_state": "[REDACTED_CREDENTIAL]",
+      "tls": false,
+      "approval": "unapproved",
+      "owner": null,
+      "models_or_tools": [],
+      "credential_indicator": false,
+      "risk_score": 1.0,
+      "severity": "low",
+      "risk_factors": [
+        "Unapproved shadow AI deployment (+1.0)"
+      ],
+      "remediation": [
+        "Enable WEBUI_AUTH=True in Open WebUI environment variables.",
+        "Disable untrusted custom tools and restrict admin account creation.",
+        "Upgrade Open WebUI to >= 0.3.10.",
+        "Review this discovery with the security/compliance team. Add to approved.yaml if legitimate, or decommission."
+      ],
+      "framework_tags": [
+        "OWASP LLM02:2025 Sensitive Information Disclosure",
+        "OWASP LLM07:2025 System Prompt Leakage",
+        "NIST AI RMF GOVERN 1.2 (Accountability & Policy)"
+      ],
+      "status": "unchanged",
+      "first_seen": "2026-11-21T07:51:36.773973+00:00",
+      "last_seen": "2026-11-21T07:51:36.773984+00:00",
+      "evidence_file": "raw/735e9e8047194d79.txt"
+    }
+  ],
+  "diff": {
+    "previous_run_id": "run_20261121_075028",
+    "current_run_id": "run_20261121_075136",
+    "new": [],
+    "changed": [
+      {
+        "id": "56638b72daa08eec",
+        "run_id": "run_20261121_075136",
+        "host": "127.0.0.1",
+        "port": 11435,
+        "service": "ollama",
+        "version": "0.1.34",
+        "category": "inference",
+        "source": "network",
+        "bind_scope": "loopback",
+        "auth_state": "[REDACTED_CREDENTIAL]",
+        "tls": false,
+        "approval": "unapproved",
+        "owner": null,
+        "models_or_tools": [
+          "llama3:latest",
+          "mistral:7b"
+        ],
+        "credential_indicator": false,
+        "risk_score": 5.5,
+        "severity": "medium",
+        "risk_factors": [
+          "No authentication required (+3.0)",
+          "Exposes active models or tools: 2 listed (+1.5)",
+          "Unapproved shadow AI deployment (+1.0)"
+        ],
+        "remediation": [
+          "Set OLLAMA_HOST=127.0.0.1:11434 in environment or service configuration.",
+          "Upgrade to Ollama >= 0.1.34 to patch CVE-2024-37032.",
+          "Do not expose Ollama port 11434 to untrusted networks without an authenticating reverse proxy.",
+          "Enable API key or bearer token authentication in the service configuration.",
+          "Place an authenticating reverse proxy (e.g., Caddy, Envoy, LiteLLM with master key) in front of the listener.",
+          "Audit and restrict model listing endpoints (/v1/models, /api/tags) to authenticated callers.",
+          "Remove unapproved or proprietary fine-tuned model weights from public storage directories.",
+          "Review this discovery with the security/compliance team. Add to approved.yaml if legitimate, or decommission."
+        ],
+        "framework_tags": [
+          "OWASP LLM01:2025 Model Denial of Service",
+          "OWASP LLM02:2025 Sensitive Information Disclosure",
+          "NIST AI RMF MAP 1.1 (AI System Context & Asset Inventory)",
+          "NIST AI RMF MEASURE 2.6 (Security & Resiliency)",
+          "NIST AI RMF MEASURE 2.6"
+        ],
+        "status": "changed",
+        "first_seen": "2026-11-21T07:51:36.736069+00:00",
+        "last_seen": "2026-11-21T07:51:36.736081+00:00",
+        "evidence_file": "raw/56638b72daa08eec.txt"
+      }
+    ],
+    "unchanged": [
+      {
+        "id": "735e9e8047194d79",
+        "run_id": "run_20261121_075136",
+        "host": "127.0.0.1",
+        "port": 3000,
+        "service": "open-webui",
+        "version": "0.3.10",
+        "category": "chat-ui",
+        "source": "network",
+        "bind_scope": "loopback",
+        "auth_state": "[REDACTED_CREDENTIAL]",
+        "tls": false,
+        "approval": "unapproved",
+        "owner": null,
+        "models_or_tools": [],
+        "credential_indicator": false,
+        "risk_score": 1.0,
+        "severity": "low",
+        "risk_factors": [
+          "Unapproved shadow AI deployment (+1.0)"
+        ],
+        "remediation": [
+          "Enable WEBUI_AUTH=True in Open WebUI environment variables.",
+          "Disable untrusted custom tools and restrict admin account creation.",
+          "Upgrade Open WebUI to >= 0.3.10.",
+          "Review this discovery with the security/compliance team. Add to approved.yaml if legitimate, or decommission."
+        ],
+        "framework_tags": [
+          "OWASP LLM02:2025 Sensitive Information Disclosure",
+          "OWASP LLM07:2025 System Prompt Leakage",
+          "NIST AI RMF GOVERN 1.2 (Accountability & Policy)"
+        ],
+        "status": "unchanged",
+        "first_seen": "2026-11-21T07:51:36.773973+00:00",
+        "last_seen": "2026-11-21T07:51:36.773984+00:00",
+        "evidence_file": "raw/735e9e8047194d79.txt"
+      }
+    ],
+    "gone": []
+  },
+  "ai_summary": null
+}

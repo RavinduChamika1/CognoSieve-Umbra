@@ -1,0 +1,17 @@
+name: llama-cpp
+category: inference
+default_ports: [8080]
+requests:
+  - method: GET
+    path: /props
+    match_any:
+      - json_path_exists: "default_generation_settings"
+      - body_contains: "llama.cpp"
+    extract:
+      version: "version"
+auth_check_path: /props
+capability_flags: ["gguf_execution", "embedded_inference"]
+specificity: 85
+status: active
+verify_note: "https://github.com/ggerganov/llama.cpp/tree/master/examples/server"
+

@@ -1,0 +1,11 @@
+# CognoSieve Umbra: Authorized Scope Specification
+label: enterprise-security-audit
+authorized_by: "Chief Information Security Officer"
+targets:
+  - 127.0.0.1
+  - 10.0.0.0/24
+  - 192.168.1.0/24
+excluded:
+  - 10.0.0.1
+  - 192.168.1.1
+notes: "Authorized defensive discovery scan for unauthorized or unapproved shadow AI instances across engineering subnets."

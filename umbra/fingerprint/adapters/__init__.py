@@ -1,0 +1,2 @@
+"""External scanner import adapters."""
+

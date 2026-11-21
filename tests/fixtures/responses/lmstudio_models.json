@@ -1,0 +1,11 @@
+{
+  "object": "list",
+  "data": [
+    {
+      "id": "lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF",
+      "object": "model",
+      "owned_by": "lmstudio"
+    }
+  ]
+}
+

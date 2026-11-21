@@ -1,0 +1,1 @@
+{"status": true, "name": "Open WebUI", "version": "0.3.10"}
